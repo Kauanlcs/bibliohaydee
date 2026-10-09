@@ -49,32 +49,35 @@ public class Main {
                 "Livro sem autor", "ISBN-TESTE", null,
                 2020, "Teste");
         cadastrarLivro(
-                "O Pequeno Príncipe", "ISBN-001",
+                "O Pequeno Príncipe", "978-85-325-3155-1",
                 antoine, 1943, "Fábula");
 
         cadastrarLivro(
-                "Dom Casmurro", "ISBN-002",
+                "Dom Casmurro", "978-857-799-171-6 ",
                 machado, 1899, "Romance");
 
         cadastrarLivro(
-                "O Hobbit", "ISBN-003",
+                "O Hobbit", "9788595086081",
                 tolkien, 1937, "Fantasia");
 
         cadastrarLivro(
-                "Harry Potter e a Pedra Filosofal", "ISBN-004",
+                "Harry Potter e a Pedra Filosofal", "9788532530271",
                 rowling, 1997, "Fantasia");
 
         cadastrarLivro(
-                "1984", "ISBN-008",
+                "Como enfrentar o ódio",
+                "978-85-359-3891-3",
+                felipeNeto,
+                2024,
+                "Autobiografia"
+        );
+        cadastrarLivro(
+                "1984", "9786557390016",
                 orwell, 1949, "Ficção distópica");
 
         cadastrarLivro(
-                "O Sítio do Picapau Amarelo", "ISBN-009",
+                "O Sítio do Picapau Amarelo", "9788511300055",
                 lobato, 1920, "Infantojuvenil");
-
-        cadastrarLivro(
-                "O Pequeno Príncipe - Edição escolar", "ISBN-010",
-                antoine, 1943, "Fábula");
 
         listarLivros();
     }
