@@ -1,5 +1,7 @@
 package br.escola.bibliohaydee.app;
 
+import br.escola.bibliohaydee.model.Usuario;
+import java.util.Scanner;
 import br.escola.bibliohaydee.model.Autor;
 import br.escola.bibliohaydee.model.Livro;
 
@@ -10,6 +12,7 @@ public class Main {
 
     static List<Autor> autores = new ArrayList<>();
     static List<Livro> livros = new ArrayList<>();
+    static List<Usuario> usuarios = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -79,6 +82,16 @@ public class Main {
                 "O Sítio do Picapau Amarelo", "9788511300055",
                 lobato, 1920, "Infantojuvenil");
 
+        Scanner entrada = new Scanner(System.in);
+        Usuario novo = lerUsuario(entrada);
+        System.out.println("Empréstimos ativos: " + novo.getEmprestimosAtivos());
+
+        try {
+            new Usuario(null, "2026004", "PROFESSOR", 5);
+        } catch (IllegalArgumentException erro) {
+            System.out.println("Nulo recusado: " + erro.getMessage());
+        }
+
         listarLivros();
     }
 
@@ -112,6 +125,38 @@ public class Main {
 
         System.out.println("Livro cadastrado: " + livro);
     }
+
+    static Usuario lerUsuario(Scanner entrada) {
+
+        while (true) {
+            System.out.print("Nome: ");
+            String nome = entrada.nextLine();
+
+            System.out.print("Matrícula: ");
+            String matricula = entrada.nextLine();
+
+            System.out.print("Tipo (ALUNO ou PROFESSOR): ");
+            String tipo = entrada.nextLine();
+
+            System.out.print("Limite de empréstimos: ");
+            String limiteTexto = entrada.nextLine();
+
+            try {
+                int limite = Integer.parseInt(limiteTexto);
+                Usuario usuario = new Usuario(nome, matricula, tipo, limite);
+                usuarios.add(usuario);
+                System.out.println("Usuário cadastrado: " + usuario.getNome());
+                return usuario;
+            } catch (NumberFormatException erro) {
+                System.out.println("Limite inválido: digite um número inteiro.");
+            } catch (IllegalArgumentException erro) {
+                System.out.println("Cadastro recusado: " + erro.getMessage());
+            }
+
+            System.out.println("Digite os dados novamente.\n");
+        }
+    }
+
     static void listarLivros() {
 
         if (livros.isEmpty()) {
