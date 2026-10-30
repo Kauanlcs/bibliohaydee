@@ -1,34 +1,62 @@
 package br.escola.bibliohaydee.model;
 
 public class Livro {
+
     private String titulo;
     private String isbn;
     private Autor autor;
-    private int anoPublicacao;
+    private int anoDePublicacao;
     private String genero;
-    private boolean disponivel;
+    private boolean disponibilidade;
 
-    public Livro(String titulo, String isbn, Autor autor, int anoPublicacao, String genero) {
+    public Livro(String titulo, String isbn, Autor autor,
+                 int anoDePublicacao, String genero) {
+
         this.titulo = titulo;
         this.isbn = isbn;
         this.autor = autor;
-        this.anoPublicacao = anoPublicacao;
+        this.anoDePublicacao = anoDePublicacao;
         this.genero = genero;
-        this.disponivel = true;
+        this.disponibilidade = true;
+    }
+    public Livro(String titulo, String isbn, Autor autor,
+                 int anoDePublicacao) {
+
+        this(titulo, isbn, autor, anoDePublicacao, "Não informado");
     }
 
-    public String getTitulo() { return titulo; }
-    public String getIsbn() { return isbn; }
-    public Autor getAutor() { return autor; }
-    public int getAnoPublicacao() { return anoPublicacao; }
-    public String getGenero() { return genero; }
-    public boolean isDisponivel() { return disponivel; }
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public int getAnoDePublicacao() {
+        return anoDePublicacao;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public boolean isDisponibilidade() {
+        return disponibilidade;
+    }
 
     @Override
     public String toString() {
-        return "\"" + titulo + "\" | ISBN: " + isbn
-                + " | Autor: " + autor.getNome()
-                + " | " + anoPublicacao + " | " + genero
-                + " | " + (disponivel ? "Disponível" : "Indisponível");
+        return "Título: " + titulo +
+                " | ISBN: " + isbn +
+                "\nAutor: " + autor +
+                "\nAno de publicação: " + anoDePublicacao +
+                " | Gênero: " + genero +
+                " | Disponibilidade: " +
+                (disponibilidade ? "disponível" : "emprestado");
     }
 }
