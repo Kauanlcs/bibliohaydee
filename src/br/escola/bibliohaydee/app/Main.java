@@ -1,3 +1,4 @@
+
 package br.escola.bibliohaydee.app;
 
 import br.escola.bibliohaydee.model.Autor;
@@ -16,6 +17,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+
 
         Autor antoine = cadastrarAutor(
                 "Antoine de Saint-Exupéry", "Francesa", 1900);
@@ -67,23 +69,55 @@ public class Main {
                 "O Sítio do Picapau Amarelo", "9788511300055",
                 lobato, 1920, "Infantojuvenil");
 
-        cadastrarLivro(
-                "Livro sem gênero (teste)", "ISBN-TESTE-SEM-GENERO",
-                antoine, 2020);
 
-
-        Scanner entrada = scanner;
-        lerUsuario();
-
-        System.out.print("\nDeseja atualizar um usuário? (S/N): ");
-        String respostaAtualizacao = entrada.nextLine();
-
-        if (respostaAtualizacao.equalsIgnoreCase("S")) {
-            atualizarUsuario(entrada);
-        }
-
-        listarLivros();
         menu();
+    }
+
+    static void menu() {
+
+        while (true) {
+
+            System.out.println("\n===== BIBLIOTECA BIBLIOHAYDEE =====");
+            System.out.println("1 - Listar livros");
+            System.out.println("2 - Pesquisar livros");
+            System.out.println("3 - Cadastrar usuário");
+            System.out.println("4 - Atualizar usuário");
+            System.out.println("5 - Listar usuários");
+            System.out.println("0 - Sair");
+
+            System.out.print("Escolha uma opção: ");
+            String opcao = scanner.nextLine();
+
+            switch (opcao) {
+
+                case "1":
+                    listarLivros();
+                    break;
+
+                case "2":
+                    pesquisarLivro();
+                    break;
+
+                case "3":
+                    lerUsuario();
+                    break;
+
+                case "4":
+                    atualizarUsuario(scanner);
+                    break;
+
+                case "5":
+                    listarUsuarios();
+                    break;
+
+                case "0":
+                    System.out.println("Encerrando a BiblioHaydee...");
+                    return;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
     }
 
     static Autor cadastrarAutor(
@@ -101,6 +135,8 @@ public class Main {
 
         autores.add(autor);
 
+        System.out.println("Autor cadastrado: " + autor);
+
         return autor;
     }
 
@@ -109,6 +145,7 @@ public class Main {
             int ano, String genero) {
 
         if (autor == null || !autores.contains(autor)) {
+            System.out.println("Erro: autor não cadastrado.");
             return;
         }
 
@@ -117,66 +154,6 @@ public class Main {
         livros.add(livro);
 
         System.out.println("Livro cadastrado: " + livro);
-    }
-
-    static void cadastrarLivro(
-            String titulo, String isbn, Autor autor, int ano) {
-
-        if (autor == null || !autores.contains(autor)) {
-            return;
-        }
-
-        Livro livro = new Livro(titulo, isbn, autor, ano);
-
-        livros.add(livro);
-
-        System.out.println("Livro cadastrado: " + livro);
-    }
-
-    static void menu() {
-
-        int opcao;
-
-        do {
-            System.out.println("\n===== BIBLIOTECA BIBLIOHAYDEE =====");
-            System.out.println("1 - Ver todos os livros");
-            System.out.println("2 - Pesquisar um livro");
-            System.out.println("3 - Cadastrar usuário");
-            System.out.println("4 - Sair");
-            System.out.print("Escolha uma opção: ");
-
-            String entrada = scanner.nextLine();
-
-            try {
-                opcao = Integer.parseInt(entrada);
-            } catch (NumberFormatException e) {
-                opcao = 0;
-            }
-
-            switch (opcao) {
-                case 1:
-                    listarLivros();
-                    break;
-
-                case 2:
-                    pesquisarLivro();
-                    break;
-
-                case 3:
-                    lerUsuario();
-                    break;
-
-                case 4:
-                    System.out.println(
-                            "Obrigado por visitar a BiblioHaydee!");
-                    break;
-
-                default:
-                    System.out.println(
-                            "Opção inválida. Tente novamente.");
-            }
-
-        } while (opcao != 4);
     }
 
     static void listarLivros() {
@@ -199,8 +176,8 @@ public class Main {
         System.out.println("1 - Pesquisar por título");
         System.out.println("2 - Pesquisar por autor");
         System.out.println("3 - Pesquisar por gênero");
-        System.out.print("Escolha uma opção: ");
 
+        System.out.print("Escolha uma opção: ");
         String entrada = scanner.nextLine();
 
         int opcao;
@@ -232,6 +209,7 @@ public class Main {
             boolean corresponde = false;
 
             switch (opcao) {
+
                 case 1:
                     corresponde = livro.getTitulo()
                             .toLowerCase()
@@ -264,16 +242,18 @@ public class Main {
         }
     }
 
+
     static Usuario lerUsuario() {
 
         while (true) {
+
             System.out.println("\n===== CADASTRO DE USUÁRIO =====");
 
             System.out.print("Nome: ");
             String nome = scanner.nextLine().trim();
 
             if (nome.isBlank()) {
-                System.out.println("Nome inválido. Digite novamente.\n");
+                System.out.println("Nome inválido. Digite novamente.");
                 continue;
             }
 
@@ -281,12 +261,12 @@ public class Main {
             String matricula = scanner.nextLine().trim();
 
             if (matricula.isBlank()) {
-                System.out.println("Matrícula inválida. Digite novamente.\n");
+                System.out.println("Matrícula inválida. Digite novamente.");
                 continue;
             }
 
             if (buscarUsuario(matricula) != null) {
-                System.out.println("Essa matrícula já está cadastrada.\n");
+                System.out.println("Essa matrícula já está cadastrada.");
                 continue;
             }
 
@@ -294,50 +274,56 @@ public class Main {
             String tipo = scanner.nextLine().trim().toUpperCase();
 
             if (!tipo.equals("ALUNO") && !tipo.equals("PROFESSOR")) {
-                System.out.println("Tipo inválido. Digite ALUNO ou PROFESSOR.\n");
+                System.out.println("Tipo inválido. Digite ALUNO ou PROFESSOR.");
                 continue;
             }
 
-            System.out.print("Deseja definir um limite personalizado? (S/N): ");
-            String definirLimite = scanner.nextLine();
+            System.out.print(
+                    "Deseja definir um limite personalizado? (S/N): ");
+
+            String definirLimite = scanner.nextLine().trim();
 
             Usuario usuario;
 
             if (definirLimite.equalsIgnoreCase("S")) {
-                System.out.print("Limite de emprestimos: ");
+
+                System.out.print("Limite de empréstimos: ");
                 String limiteTexto = scanner.nextLine();
 
                 try {
                     int limite = Integer.parseInt(limiteTexto);
 
                     if (limite < 1) {
-                        System.out.println("O limite deve ser maior que zero.");
-                        System.out.println("Digite os dados novamente.\n");
+                        System.out.println(
+                                "O limite deve ser maior que zero.");
                         continue;
                     }
 
                     usuario = new Usuario(nome, matricula, tipo, limite);
 
                 } catch (NumberFormatException erro) {
-                    System.out.println("Limite inválido: digite um número inteiro.");
-                    System.out.println("Digite os dados novamente.\n");
+                    System.out.println(
+                            "Limite inválido. Digite um número inteiro.");
                     continue;
                 }
 
             } else if (definirLimite.equalsIgnoreCase("N")) {
+
                 usuario = new Usuario(nome, matricula, tipo);
 
             } else {
                 System.out.println("Resposta inválida. Digite S ou N.");
-                System.out.println("Digite os dados novamente.\n");
                 continue;
             }
 
             usuarios.add(usuario);
 
-            System.out.println("Usuário cadastrado: "
-                    + usuario.getNome());
-
+            System.out.println("\nUsuário cadastrado com sucesso!");
+            System.out.println("Nome: " + usuario.getNome());
+            System.out.println("Matrícula: " + usuario.getMatricula());
+            System.out.println("Tipo: " + usuario.getTipo());
+            System.out.println("Limite de empréstimos: "
+                    + usuario.getLimiteEmprestimos());
             System.out.println("Empréstimos ativos: "
                     + usuario.getEmprestimosAtivos());
 
@@ -345,9 +331,11 @@ public class Main {
         }
     }
 
+
     static Usuario buscarUsuario(String matricula) {
 
         for (Usuario usuario : usuarios) {
+
             if (usuario.getMatricula().equalsIgnoreCase(matricula)) {
                 return usuario;
             }
@@ -356,15 +344,41 @@ public class Main {
         return null;
     }
 
+    static void listarUsuarios() {
+
+        System.out.println("\n===== USUÁRIOS CADASTRADOS =====");
+
+        if (usuarios.isEmpty()) {
+            System.out.println("Nenhum usuário cadastrado.");
+            return;
+        }
+
+        for (Usuario usuario : usuarios) {
+
+            System.out.println("\nNome: " + usuario.getNome());
+            System.out.println("Matrícula: " + usuario.getMatricula());
+            System.out.println("Tipo: " + usuario.getTipo());
+            System.out.println("Limite de empréstimos: "
+                    + usuario.getLimiteEmprestimos());
+            System.out.println("Empréstimos ativos: "
+                    + usuario.getEmprestimosAtivos());
+
+            System.out.println("-------------------------");
+        }
+    }
+
     static void atualizarUsuario(Scanner entrada) {
 
+        System.out.println("\n===== ATUALIZAR USUÁRIO =====");
+
         System.out.print("Matrícula do usuário: ");
-        String matricula = entrada.nextLine();
+        String matricula = entrada.nextLine().trim();
 
         Usuario usuario = buscarUsuario(matricula);
 
         if (usuario == null) {
-            System.out.println("Usuário não localizado. Nenhuma alteração feita.");
+            System.out.println(
+                    "Usuário não localizado. Nenhuma alteração feita.");
             return;
         }
 
@@ -372,49 +386,60 @@ public class Main {
         System.out.println("Nome: " + usuario.getNome());
         System.out.println("Matrícula: " + usuario.getMatricula());
         System.out.println("Tipo: " + usuario.getTipo());
-        System.out.println("Limite de empréstimos: " + usuario.getLimiteEmprestimos());
-        System.out.println("Empréstimos ativos: " + usuario.getEmprestimosAtivos());
+        System.out.println("Limite de empréstimos: "
+                + usuario.getLimiteEmprestimos());
+        System.out.println("Empréstimos ativos: "
+                + usuario.getEmprestimosAtivos());
 
         System.out.println("\n1 - Alterar nome");
         System.out.println("2 - Alterar limite de empréstimos");
-        System.out.print("Escolha: ");
 
+        System.out.print("Escolha: ");
         String opcao = entrada.nextLine().trim();
 
         if (opcao.equals("1")) {
+
             System.out.print("Novo nome: ");
             String novoNome = entrada.nextLine();
 
             if (usuario.setNome(novoNome)) {
                 System.out.println("Nome atualizado com sucesso.");
             } else {
-                System.out.println("Nome inválido. Nenhuma alteração feita.");
+                System.out.println(
+                        "Nome inválido. Nenhuma alteração feita.");
             }
+            /*            System.out.print("Novo nome: ");
+            String novoNome = entrada.nextLine();
+
+            if (usuario.setNome(novoNome)) {
+                System.out.println("Nome atualizado com sucesso.");
+            } else {
+                System.out.println("Nome inválido. Nenhuma alteração feita.");
+            }*/
 
         } else if (opcao.equals("2")) {
 
-            while (true) {
-                System.out.print("Novo limite de empréstimos: ");
-                String limiteTexto = entrada.nextLine();
+            System.out.print("Novo limite de empréstimos: ");
+            String limiteTexto = entrada.nextLine();
 
-                try {
-                    int novoLimite = Integer.parseInt(limiteTexto);
+            try {
+                int novoLimite = Integer.parseInt(limiteTexto);
 
-                    if (usuario.setLimiteEmprestimos(novoLimite)) {
-                        System.out.println("Limite atualizado com sucesso.");
-                    } else {
-                        System.out.println("Limite inválido. Nenhuma alteração feita.");
-                    }
-
-                    break;
-
-                } catch (NumberFormatException erro) {
-                    System.out.println("Digite um número inteiro. Tente novamente.");
+                if (usuario.setLimiteEmprestimos(novoLimite)) {
+                    System.out.println("Limite atualizado com sucesso.");
+                } else {
+                    System.out.println(
+                            "Limite inválido. Nenhuma alteração feita.");
                 }
+
+            } catch (NumberFormatException erro) {
+                System.out.println(
+                        "Digite um número inteiro. Nenhuma alteração feita.");
             }
 
         } else {
-            System.out.println("Opção inválida. Nenhuma alteração feita.");
+            System.out.println(
+                    "Opção inválida. Nenhuma alteração feita.");
         }
     }
 }

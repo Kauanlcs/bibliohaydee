@@ -7,11 +7,11 @@ public class Usuario {
     private String nome;
     private String matricula;
     private String tipo;
-    private int limiteEmprestimos;
-    private int emprestimosAtivos;
-    
-    public Usuario(String nome, String matricula,
-                   String tipo, int limiteEmprestimos) {
+    private Integer limiteEmprestimos;
+    private Integer emprestimosAtivos;
+
+    public Usuario(String nomeRecebido, String matriculaRecebida,
+                   String tipoRecebido, Integer limiteRecebido) {
 
         this.nome = nome.trim();
         this.matricula = matricula.trim();
@@ -23,7 +23,6 @@ public class Usuario {
     public Usuario(String nome, String matricula, String tipo) {
         this(nome, matricula, tipo, LIMITE_PADRAO);
     }
-
 
     public String getNome() {
         return nome;
@@ -37,23 +36,32 @@ public class Usuario {
         return tipo;
     }
 
-    public int getLimiteEmprestimos() {
+    public Integer getLimiteEmprestimos() {
         return limiteEmprestimos;
     }
 
-    public int getEmprestimosAtivos() {
+    public Integer getEmprestimosAtivos() {
         return emprestimosAtivos;
     }
 
     public boolean setNome(String novoNome) {
-
-        if (novoNome == null || novoNome.isBlank()) {
-            return false;
+        if (novoNome == null || novoNome.trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode ser vazio.");
         }
 
-        this.nome = novoNome.trim();
+        nome = novoNome;
         return true;
     }
+
+
+    public void setTipo(String novoTipo) {
+        if (novoTipo == null
+                || (!novoTipo.equals("ALUNO") && !novoTipo.equals("PROFESSOR"))) {
+            throw new IllegalArgumentException("O tipo deve ser ALUNO ou PROFESSOR.");
+        }
+        tipo = novoTipo;
+    }
+
 
     public boolean setLimiteEmprestimos(int novoLimite) {
 
